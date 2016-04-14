@@ -1,3 +1,6 @@
+/**
+ * @author: @bneiluj
+ */
 var path = require('path');
 
 // Helpers functions
