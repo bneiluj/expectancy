@@ -2,4 +2,4 @@
  * @author: @bneiluj
  */
 //=== Import webpack config
-modules.export = require('./config/webpack.dev.js');
+module.exports = require('./config/webpack.dev.js');
