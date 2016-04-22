@@ -1,5 +1,5 @@
 {
-  "name": "expectancy project",
+  "name": "expectancy-project",
   "version": "0.0.1",
   "description": "Your lifetime expectancy",
   "author": "Julien Bouteloup <@bneiluj>",
@@ -7,7 +7,15 @@
   "license": "MIT",
   "scripts": {
     "webpack": "webpack",
+    "typings": "typings",
     "webpack-dev-server": "webpack-dev-server",
+
+    "clean": "npm cache clean && npm run rimraf -- node_modules doc typings coverage dist",
+      "clean:dist": "npm run rimraf -- dist",
+        "preclean:install": "npm run clean",
+      "clean:install": "npm set progress=false && npm install",
+        "preclean:start": "npm run clean",
+      "clean:start": "npm start",
 
     "build": "npm run build:dev",
         "prebuild:dev": "npm run clean:dist",
@@ -21,20 +29,25 @@
       "server:prod": "http-server dist --cors",
 
     "start": "npm run server:dev",
-      "start:hmr": "npm run server:dev:hmr",
-
-    "postinstall": "npm run typings -- install"
+      "start:hmr": "npm run server:dev:hmr"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.14"
+    "angular2": "2.0.0-beta.14",
+    "rxjs": "^5.0.0-beta.4",
+    "zone.js": "0.6.10"
   },
   "devDependencies": {
+    "typings": "^0.7.9",
     "http-server": "^0.9.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
     "copy-webpack-plugin": "^1.1.1",
     "html-webpack-plugin": "^2.9.0",
-    "awesome-typescript-loader": "~0.16.2"
+    "awesome-typescript-loader": "~0.16.2",
+    "es6-shim": "^0.35.0",
+    "es7-reflect-metadata": "^1.6.0",
+    "webpack-merge": "^0.8.4"
+
   },
   "repository": {
     "type": "git",
