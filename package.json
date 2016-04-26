@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "webpack": "webpack",
+    "rimraf": "rimraf",
     "typings": "typings",
     "webpack-dev-server": "webpack-dev-server",
 
@@ -29,12 +30,15 @@
       "server:prod": "http-server dist --cors",
 
     "start": "npm run server:dev",
-      "start:hmr": "npm run server:dev:hmr"
+      "start:hmr": "npm run server:dev:hmr",
+
+    "postinstall": "npm run typings -- install"
   },
   "dependencies": {
     "angular2": "2.0.0-beta.14",
     "rxjs": "^5.0.0-beta.4",
     "zone.js": "0.6.10",
+    "core-js": "^2.1.5",
     "@angular2-material/button": "2.0.0-alpha.2",
     "@angular2-material/card": "2.0.0-alpha.2",
     "@angular2-material/checkbox": "2.0.0-alpha.2",
@@ -48,6 +52,7 @@
   },
   "devDependencies": {
     "angular2-hmr": "~0.5.5",
+    "awesome-typescript-loader": "~0.16.2",
     "file-loader": "^0.8.5",
     "copy-webpack-plugin": "^1.1.1",
     "typings": "^0.7.9",
@@ -55,12 +60,15 @@
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
     "copy-webpack-plugin": "^1.1.1",
-    "html-webpack-plugin": "^2.9.0",
-    "awesome-typescript-loader": "~0.16.2",
+    "html-webpack-plugin": "^2.16.0",
     "es6-shim": "^0.35.0",
     "es7-reflect-metadata": "^1.6.0",
     "webpack-merge": "^0.8.4",
-    "source-map-loader": "^0.1.5"
+    "source-map-loader": "^0.1.5",
+    "exports-loader": "^0.6.3",
+    "expose-loader": "^0.7.1",
+    "json-loader": "^0.5.4",
+    "rimraf": "^2.5.2"
   },
   "repository": {
     "type": "git",

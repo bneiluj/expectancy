@@ -2,38 +2,38 @@ import {Injectable} from 'angular2/core';
 import {HmrState} from 'angular2-hmr';
 
 @Injectable()
-
 export class AppState {
-  // HmrState is used by HMR to track the any state during reloading
+  // HmrState uis used by HMR to track the any state during reloading
   @HmrState() _state = {};
 
   constructor() {
 
   }
 
-  // Already return a clone of current state
+  // already return a clone of the current state
   get state() {
-    console.log("app.service.ts, this.state: ", this.state);
-    return this._state = this._clone(this.state);
+    return this._state = this._clone(this._state);
   }
-
-  // Never allow mutation
+  // never allow mutation
   set state(value) {
-    console.log("app.service.ts, value: ", value);
-    throw new Error('do not mutate the `state` directly');
+    throw new Error('do not mutate the `.state` directly');
   }
 
-  //
+
   get(prop?: any) {
-    // Use the state getter for the clone
+    // use our state getter for the clone
     const state = this.state;
-    console.log("app.service.ts, value: ", state);
     return state[prop] || state;
   }
 
-  // Clone object
+  set(prop: string, value: any) {
+    // internally mutate our state
+    return this._state[prop] = value;
+  }
+
+
   _clone(object) {
-    // clone object
+    // simple object clone
     return JSON.parse(JSON.stringify( object ));
   }
 }
