@@ -19,11 +19,11 @@ export class AppState {
 
   // Never allow mutation
   set state(value) {
-    console.log("app.service.ts, value: ", state);
+    console.log("app.service.ts, value: ", value);
     throw new Error('do not mutate the `state` directly');
   }
 
-  // 
+  //
   get(prop?: any) {
     // Use the state getter for the clone
     const state = this.state;

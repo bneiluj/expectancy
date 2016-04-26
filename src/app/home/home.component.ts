@@ -24,3 +24,12 @@ import {XLarge} from './x-large';
   // Every Angular template is first compiled by the browser before Angular runs it's compiler
   template: require('./home.html')
 })
+
+export class Home {
+  // Set default value
+  localAge = { value: '' };
+  // Typescript public modifiers
+  constructor(public appState: AppState, public title: Title ) {
+
+  }
+}
