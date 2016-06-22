@@ -1,19 +1,19 @@
 /**
  * @author: @bneiluj
  */
-var helpers = require('./helpers');
-var webpackMerge = require('webpack-merge');
-var commonConfig = require('./webpack.common.js');
 
+var helpers = require('./helpers');
+var webpackMerge = require('webpack-merge'); //Used to merge webpack configs
+var commonConfig = require('./webpack.common.js'); //The settings that are common to prod and dev
 
 /**
  * Webpack Plugins
  */
- var DefinePlugin = require('webpack/lib/DefinePlugin');
+var DefinePlugin = require('webpack/lib/DefinePlugin');
 
- /**
-  * Webpack Contants
-  */
+/**
+ * Webpack Constants
+ */
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 const HMR = helpers.hasProcessFlag('hot');
 const METADATA = webpackMerge(commonConfig.metadata, {
@@ -25,29 +25,60 @@ const METADATA = webpackMerge(commonConfig.metadata, {
 
 /**
  * Webpack configuration
+ *
+ * See: http://webpack.github.io/docs/configuration.html#cli
  */
- module.exports = webpackMerge(commonConfig, {
-  //  Debug mode
+module.exports = webpackMerge(commonConfig, {
+  // Switch loaders to debug mode.
+  //
+  // See: http://webpack.github.io/docs/configuration.html#debug
   debug: true,
-  // Better debugging tools
+
+  // Developer tool to enhance debugging
+  //
+  // See: http://webpack.github.io/docs/configuration.html#devtool
+  // See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
   devtool: 'cheap-module-eval-source-map',
-  // compilation
+
+  // Options affecting the output of the compilation.
+  //
+  // See: http://webpack.github.io/docs/configuration.html#output
   output: {
-    // absolute path
+
+    // The output directory as absolute path (required).
+    //
+    // See: http://webpack.github.io/docs/configuration.html#output-path
     path: helpers.root('dist'),
-    // Output file on the disk
+
+    // Specifies the name of each output file on disk.
+    // IMPORTANT: You must not specify an absolute path here!
+    //
+    // See: http://webpack.github.io/docs/configuration.html#output-filename
     filename: '[name].bundle.js',
-    // SourceMaps for the javascript files
+
+    // The filename of the SourceMaps for the JavaScript files.
+    // They are inside the output.path directory.
+    //
+    // See: http://webpack.github.io/docs/configuration.html#output-sourcemapfilename
     sourceMapFilename: '[name].map',
-    // Non-entry chunks as relative path
+
+    // The filename of non-entry chunks as relative path
+    // inside the output.path directory.
+    //
+    // See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
     chunkFilename: '[id].chunk.js'
+
   },
-  pulgin: [
+
+  plugins: [
     // Plugin: DefinePlugin
     // Description: Define free variables.
     // Useful for having development builds with debug logging or adding global constants.
     //
     // Environment helpers
+    //
+    // See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
+    // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
     new DefinePlugin({
       'ENV': JSON.stringify(METADATA.ENV),
       'HMR': METADATA.HMR,
@@ -56,16 +87,19 @@ const METADATA = webpackMerge(commonConfig.metadata, {
         'NODE_ENV': JSON.stringify(METADATA.ENV),
         'HMR': METADATA.HMR,
       }
-    })
+    }),
   ],
+
   // Static analysis linter for TypeScript advanced options configuration
   // Description: An extensible linter for the TypeScript language.
+  //
   // See: https://github.com/wbuchwalter/tslint-loader
   tslint: {
     emitErrors: false,
     failOnHint: false,
     resourcePath: 'src'
   },
+
   // Webpack Development Server configuration
   // Description: The webpack-dev-server is a little node.js Express server.
   // The server emits information about the compilation state to the client,

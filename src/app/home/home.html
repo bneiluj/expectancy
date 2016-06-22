@@ -1,18 +1,26 @@
 <md-card>
   <md-card-content>
-    <span x-large>This is the home page</span>
-    <form
-      (ngSubmit)="submitState(localState.value)"
-      autocomplete="off">
+    <span x-large>Lifetime expectancy</span>
+
+    <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
+
       <md-input
-        placeholder="Submit your age"
+        placeholder="Submit Local State to App State"
         [value]="localState.value"
         (input)="localState.value = $event.target.value"
         autofocus>
-      <button
-        md-raised-button
-        color="primary">Submit age and wait for the magic</button>
+      </md-input>
+
+      <button md-raised-button color="primary">Submit Value</button>
     </form>
+
+    <md-card>
+      For hot module reloading run
+      <pre>npm run start:hmr</pre>
+    </md-card>
+
+    <hr>
     <pre>this.localState = {{ localState | json }}</pre>
+
   </md-card-content>
 </md-card>

@@ -1,50 +1,82 @@
 /**
- * @author @bneiluj
+ * @author: @bneiluj
  */
 
- var webpack = require('webpack');
- var helpers = require('./helpers');
+var webpack = require('webpack');
+var helpers = require('./helpers');
 
 /**
  * Webpack Plugins
  */
- var CopyWebpackPlugin = require('copy-webpack-plugin');
- var HtmlWebpackPlugin = require('html-webpack-plugin');
- var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 /**
  * Webpack Constants
  */
- const METADATA = {
-   title: 'Expectancy app',
-   baseUrl: '/'
- };
+const METADATA = {
+  title: 'Life expectancy',
+  baseUrl: '/'
+};
 
 /**
  * Webpack configuration
+ *
+ * See: http://webpack.github.io/docs/configuration.html#cli
  */
+module.exports = {
 
- module.exports = {
-  //  static info for index.html
-  metada: METADATA,
-  // angular app entry point
+  // Static metadata for index.html
+  //
+  // See: (custom attribute)
+  metadata: METADATA,
+
+  // Cache generated modules and chunks to improve performance for multiple incremental builds.
+  // This is enabled by default in watch mode.
+  // You can pass false to disable it.
+  //
+  // See: http://webpack.github.io/docs/configuration.html#cache
+  // cache: false,
+
+  // The entry point for the bundle
+  // Our Angular.js app
+  //
+  // See: http://webpack.github.io/docs/configuration.html#entry
   entry: {
+
     'polyfills': './src/polyfills.ts',
     'vendor': './src/vendor.ts',
-    'main': './src/main.browser.ts'
+    'main': './src/main.browser.ts',
+
   },
+
   // Options affecting the resolving of modules.
+  //
+  // See: http://webpack.github.io/docs/configuration.html#resolve
   resolve: {
+
     // An array of extensions that should be used to resolve modules.
+    //
+    // See: http://webpack.github.io/docs/configuration.html#resolve-extensions
     extensions: ['', '.ts', '.js'],
+
     // Make sure root is src
     root: helpers.root('src'),
-    // Remove other default in src
+
+    // remove other default values
     modulesDirectories: ['node_modules'],
+
   },
+
   // Options affecting the normal modules.
+  //
+  // See: http://webpack.github.io/docs/configuration.html#module
   module: {
+
     // An array of applied pre and post loaders.
+    //
+    // See: http://webpack.github.io/docs/configuration.html#module-preloaders-module-postloaders
     preLoaders: [
 
       // Tslint loader support for *.ts files
@@ -142,7 +174,7 @@
     // See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
     // See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['main', 'vendor', 'polyfills'],
+      name: helpers.reverse(['polyfills', 'vendor', 'main']),
       minChunks: Infinity
     }),
 
